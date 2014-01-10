@@ -1,0 +1,11 @@
+extends layout
+
+block content
+  form(role="form", method="post", action="/up", enctype="multipart/form-data")
+    input(type="file", name="pic")
+    button.btn.btn-default(type="submit") 提交
+
+  if smpic
+    div.box(style="width: #{smpic.width}px; height: #{smpic.height}px;")
+      each p in smpic.pics
+        img(src="#{p}")

@@ -1,0 +1,10 @@
+.DS_Store
+build
+.project
+.settings
+Thumbs.db
+_notes
+*.psd
+*.unfinished
+node_modules
+public/images/uploads
