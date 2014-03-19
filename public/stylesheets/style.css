@@ -19,6 +19,10 @@ a {
   position: absolute;
   overflow: hidden;
 }
+.flip:hover {
+  border: 1px solid rgba(0, 0, 0, .7);
+  background-color: rgba(0, 0, 0, .3);
+}
 .flip a {
   font-size: 15px;
   color: #fff;

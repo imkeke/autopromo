@@ -47,7 +47,8 @@ exports.up = function(req, res) {
 
           res.render('index', {
               pic: files.pic.path.split('public')[1],
-              smpic: smpic
+              smpic: smpic,
+              name: files.pic.name
           })
 
         })
@@ -57,4 +58,19 @@ exports.up = function(req, res) {
 
   form.on('end', function(err, fields, files) {
   });
+};
+
+exports.generate = function(req, res) {
+  var name = req.param('name')
+    , html = req.param('html')
+    , path = 'public/html/' + name + '.html'
+
+  fs.writeFile(path, html, function(err) {
+    if (err) throw err
+    res.json({
+      succ: true,
+      html: html,
+      path: '/html/' + name + '.html'
+    })
+  })
 };

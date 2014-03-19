@@ -8,3 +8,4 @@ _notes
 *.unfinished
 node_modules
 public/images/uploads
+public/html/
