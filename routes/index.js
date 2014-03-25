@@ -64,6 +64,9 @@ exports.generate = function(req, res) {
   var name = req.param('name')
     , html = req.param('html')
     , path = 'public/html/' + name + '.html'
+    , structure = '<!DOCTYPE html> <html lang="en"> <head> <link rel="stylesheet" href="/stylesheets/style.css"> </head> <body> {{html}} </body> </html>'
+
+  html = structure.replace('{{html}}', html)
 
   fs.writeFile(path, html, function(err) {
     if (err) throw err
