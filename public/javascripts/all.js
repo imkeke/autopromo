@@ -1,5 +1,8 @@
+"use strict"
+
 $(function() {
-  $('.box').on('mousedown', function(event) {
+  var $box = $('.box')
+  $box.on('mousedown', function(event) {
     if (event.button === 2) return
 
     var $flip = $('<div class="flip"></div>')
@@ -34,28 +37,52 @@ $(function() {
         return false
       }
 
-      var url = prompt('输入 URL：')
-      $flip.append($('<a href="' + url + '" target="_blank">' + url + '</a>'))
+      var url = prompt('输入淘宝客 URL：')
+      var taobaourl = prompt('输入淘宝原 URL：')
+      $flip.append($('<a href="' + url + '" data-taobao="' + taobaourl + '" target="_blank">' + url + '</a>'))
     })
 
     event.preventDefault()
   })
 
   // 修改 url
-  $('.box').on('click', '.flip', function(event) {
-      var url = prompt('输入 URL：')
-      $(this).find('a').attr('href', url).text(url)
+  $box.on('click', '.flip', function(event) {
+    var url = prompt('输入 URL：')
+    $(this).find('a').attr('href', url).text(url)
 
-      event.preventDefault()
+    event.preventDefault()
   })
 
   // 生成 html
   $('.js-generate').on('click', function(event) {
-    var data = {}
+    var data = {
+          name: $(this).data('name'),
+          width: $box.css('width'),
+          height: $box.css('height'),
+          images: [],
+          links: []
+        }
       , pop = window.open('about:blank')
 
-    data.html = $('.box')[0].outerHTML
-    data.name = $(this).data('name')
+    $.each($box.find('img'), function() {
+      var e = $(this)
+      data.images.push(e.attr('src'))
+    })
+
+    $.each($box.find('.flip'), function(i) {
+        var e = $(this)
+          , d = {
+            width: e.css('width'),
+            height: e.css('height'),
+            left: e.css('left'),
+            top: e.css('top'),
+            link: e.find('a').attr('href'),
+            taobao: e.find('a').attr('data-taobao'),
+            i: i
+          }
+
+        data.links.push(d)
+    })
 
     $.ajax({
       url: '/generate',
@@ -63,7 +90,7 @@ $(function() {
       dataType: 'json',
       data: data
     }).done(function(res) {
-      if (!res.succ) return
+      if (res && !res.succ) return
       pop.window.location = res.path
     })
     

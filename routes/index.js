@@ -7,7 +7,9 @@ var util = require('util')
   , formidable = require('formidable')
   , fs = require('fs')
   , imagemagick = require('imagemagick')
-  , sizeOf = require('image-size');
+  , sizeOf = require('image-size')
+  , mu = require('mu2')
+  , Mustache = require('mustache')
 
 exports.index = function(req, res){
   res.render('index', {
@@ -60,20 +62,26 @@ exports.up = function(req, res) {
   });
 };
 
+mu.root = 'public/template'
 exports.generate = function(req, res) {
   var name = req.param('name')
-    , html = req.param('html')
+    , data = req.body
     , path = 'public/html/' + name + '.html'
-    , structure = '<!DOCTYPE html> <html lang="en"> <head> <link rel="stylesheet" href="/stylesheets/style.css"> </head> <body> {{html}} </body> </html>'
 
-  html = structure.replace('{{html}}', html)
-
-  fs.writeFile(path, html, function(err) {
+  fs.readFile('public/template/template.html', function(err, tpl) {
     if (err) throw err
-    res.json({
-      succ: true,
-      html: html,
-      path: '/html/' + name + '.html'
+
+    var output = Mustache.to_html(tpl.toString(), data).replace(/&#x2F;/g, '/')
+
+    fs.writeFile(path, output, function(err) {
+      if (err) throw err
+      res.json({
+        succ: true,
+        html: output,
+        path: '/html/' + name + '.html'
+      })
     })
+
   })
+
 };

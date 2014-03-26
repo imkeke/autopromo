@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>{{name}}</title>
+    <style>
+        .box {
+            position: relative;
+            margin: 0 auto;
+            font-size: 0;
+            width: {{width}};
+            height: {{height}};
+        }
+        .box a {
+            position: absolute;
+        }
+        {{#links}}
+        .link_{{i}} {
+            width: {{width}};
+            height: {{height}};
+            left: {{left}};
+            top: {{top}};
+        }
+        {{/links}}
+    </style>
+</head>
+<body>
+    <div class="box">
+        {{#images}}
+        <img src="{{.}}">
+        {{/images}}
+        {{#links}}
+        <a href="{{link}}" target="_blank" class="link link_{{i}}" data-taobao="{{taobao}}"></a>
+        {{/links}}
+    </div>
+</body>
+</html>
