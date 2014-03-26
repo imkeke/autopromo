@@ -30,7 +30,7 @@ exports.up = function(req, res) {
       return;
     }
     // fs.rename(files.pic.path, './public/uploads/' + files.pic.name);
-    imagemagick.convert([files.pic.path, '-crop', '1920x150', 'public/images/uploads/' + files.pic.name], function(err, stdout) {
+    imagemagick.convert([files.pic.path, '-crop', '1920x400', 'public/images/uploads/' + files.pic.name], function(err, stdout) {
         if (err) throw err;
 
         console.log(util.inspect(stdout));
@@ -43,14 +43,14 @@ exports.up = function(req, res) {
             pics: []
           }
           
-          for (var i = 0; i <= parseInt(metadata.height / 150); i++) {
+          for (var i = 0; i <= parseInt(metadata.height / 400); i++) {
             smpic.pics[i] = '/images/uploads/' + files.pic.name.replace('.jpg', '-' + i + '.jpg');
           }
 
           res.render('index', {
               pic: files.pic.path.split('public')[1],
               smpic: smpic,
-              name: files.pic.name
+              name: files.pic.name.replace('.jpg', '')
           })
 
         })
