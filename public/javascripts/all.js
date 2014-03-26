@@ -47,8 +47,13 @@ $(function() {
 
   // 修改 url
   $box.on('click', '.flip', function(event) {
-    var url = prompt('输入 URL：')
-    $(this).find('a').attr('href', url).text(url)
+    var e = $(this).find('a')
+      , o = e.attr('href') // origin href
+      , t = e.attr('data-taobao') // origin data-taobao
+      , url = prompt('输入 URL：', o)
+      , taobaourl = prompt('输入淘宝原 URL：', t)
+
+    e.attr('href', url).attr('data-taobao', taobaourl).text(url)
 
     event.preventDefault()
   })
@@ -96,4 +101,5 @@ $(function() {
     
     event.preventDefault()
   })
+
 })
