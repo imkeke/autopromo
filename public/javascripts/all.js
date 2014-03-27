@@ -40,14 +40,15 @@ $(function() {
       var url = prompt('输入淘宝客 URL：')
       var taobaourl = prompt('输入淘宝原 URL：')
       $flip.append($('<a href="' + url + '" data-taobao="' + taobaourl + '" target="_blank">' + url + '</a>'))
+      $flip.append($('<div class="action"><span class="glyphicon glyphicon-edit" title="修改"></span><span class="glyphicon glyphicon-trash" title="删除"></span></div>')) // 丑陋的
     })
 
     event.preventDefault()
   })
 
   // 修改 url
-  $box.on('click', '.flip', function(event) {
-    var e = $(this).find('a')
+  $box.on('click', '.flip .glyphicon-edit', function(event) {
+    var e = $(this).parents('.flip').find('a')
       , o = e.attr('href') // origin href
       , t = e.attr('data-taobao') // origin data-taobao
       , url = prompt('输入 URL：', o)
@@ -56,6 +57,42 @@ $(function() {
     e.attr('href', url).attr('data-taobao', taobaourl).text(url)
 
     event.preventDefault()
+  })
+
+  // 删除链接
+  $box.on('click', '.flip .glyphicon-trash', function(event) {
+    var e = $(this).parents('.flip')
+
+    if (window.confirm('确认此次操作？')) {
+      e.remove()
+    }
+
+    event.preventDefault()
+  })
+  
+  // 移动
+  $box.on('mousedown', '.flip', function(event) {
+    if (event.button === 2) return
+
+    var e = $(this)
+      , left = parseFloat(e.css('left'), 10) // 初始 left
+      , top = parseFloat(e.css('top'), 10) // 初始 top
+      , x = event.pageX // 鼠标坐标 用来计算划动距离
+      , y = event.pageY
+
+    $(document).on('mousemove', function(event) {
+      var ix = event.pageX - x // 移动距离 有正负
+        , iy = event.pageY - y
+
+    e.css({
+        left: left + ix,
+        top: top + iy
+    })
+    }).on('mouseup', function() {
+      $(this).off('mousemove');
+    })
+
+    event.stopPropagation()
   })
 
   // 生成 html

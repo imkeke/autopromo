@@ -1,15 +1,27 @@
 extends layout
 
 block content
-  form(role="form", method="post", action="/up", enctype="multipart/form-data")
-    input(type="file", name="pic")
-    button.btn.btn-default(type="submit") 提交
+
+  if !smpic
+    form(role="form", method="post", action="/up", enctype="multipart/form-data")
+      div.form-group
+        label(for="upfile") 请选择图片
+        input(type="file", name="pic", id="upfile")
+      button.btn.btn-default(type="submit") 提交
 
   if smpic
-    div.box(style="width: #{smpic.width}px; height: #{smpic.height}px;")
-      each p in smpic.pics
-        img(src="#{p}")
-    button.btn.js-generate(data-name="#{name}") 生成
+    div.wp(style="width: #{smpic.width}px;")
+      ul.pager
+        li.previous
+          a(href="/") 返回
+      div.alert.alert-success
+        h4 上传成功
+        p 请在下方图片中划动链接和输入链接地址
+      div.box(style="width: #{smpic.width}px; height: #{smpic.height}px;")
+        each p in smpic.pics
+          img(src="#{p}")
+      div.generate
+        button.btn.btn-primary.js-generate(data-name="#{name}") 生成并预览
 
   script(src="/javascripts/jquery.js")
   script(src="/javascripts/all.js")
