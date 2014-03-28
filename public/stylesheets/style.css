@@ -45,6 +45,9 @@ form {
     width: 580px;
     margin: 0 auto;
 }
+form .progress {
+  display: none;
+}
 .generate {
     margin: 20px auto 0;
 }

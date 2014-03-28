@@ -139,4 +139,13 @@ $(function() {
     event.preventDefault()
   })
 
+  // 上传进度条
+  $('form').on('click', 'button', function() {
+    var file = $('form input[type="file"]').val()
+    if (!file) {
+        alert('请选择图片')
+        return false
+    }
+    $('form .progress').show()
+  })
 })

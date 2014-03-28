@@ -4,9 +4,14 @@ block content
 
   if !smpic
     form(role="form", method="post", action="/up", enctype="multipart/form-data")
+      div.alert.alert-warning
+        p 请上传一张命名为 <code>xx.jpg</code> 的图片，生成后为 <code>xx.html</code> 文件
+        p <code>xx</code> 为你想要的名字
       div.form-group
         label(for="upfile") 请选择图片
         input(type="file", name="pic", id="upfile")
+      div.progress.progress-striped.active
+        div.progress-bar(role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 100%")
       button.btn.btn-default(type="submit") 提交
 
   if smpic
