@@ -41,6 +41,7 @@ $(function() {
       var taobaourl = prompt('输入淘宝原 URL：')
       $flip.append($('<a href="' + url + '" data-taobao="' + taobaourl + '" target="_blank">' + url + '</a>'))
       $flip.append($('<div class="action"><span class="glyphicon glyphicon-edit" title="修改"></span><span class="glyphicon glyphicon-trash" title="删除"></span></div>')) // 丑陋的
+      .append('<div class="resize"></div>')
     })
 
     event.preventDefault()
@@ -84,12 +85,40 @@ $(function() {
       var ix = event.pageX - x // 移动距离 有正负
         , iy = event.pageY - y
 
-    e.css({
-        left: left + ix,
-        top: top + iy
-    })
+      e.css({
+          left: left + ix,
+          top: top + iy
+      })
     }).on('mouseup', function() {
-      $(this).off('mousemove');
+      $(this).off('mousemove')
+    })
+
+    event.stopPropagation()
+  })
+
+  // resize
+  $box.on('mousedown', '.resize', function(event) {
+    if (event.button === 2) return
+
+    var e = $(this).parent()
+      , width = e.width()
+      , height = e.height()
+      , x = event.pageX // 鼠标坐标 用来计算划动距离
+      , y = event.pageY
+
+    $(document).on('mousemove', function(event) {
+      var ix = event.pageX - x
+        , iy = event.pageY - y
+
+      $('body').addClass('disable-select')
+
+      e.css({
+          width: width + ix,
+          height: height + iy
+      })
+    }).on('mouseup', function() {
+      $(this).off('mousemove')
+      $('body').removeClass('disable-select')
     })
 
     event.stopPropagation()
