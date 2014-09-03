@@ -37,9 +37,8 @@ $(function() {
         return false
       }
 
-      var url = prompt('输入淘宝客 URL：')
-      var taobaourl = prompt('输入淘宝原 URL：')
-      $flip.append($('<a href="' + url + '" data-taobao="' + taobaourl + '" target="_blank">' + url + '</a>'))
+      var url = prompt('请输入 URL：')
+      $flip.append($('<a href="' + url + '" target="_blank">' + url + '</a>'))
       $flip.append($('<div class="action"><span class="glyphicon glyphicon-edit" title="修改"></span><span class="glyphicon glyphicon-trash" title="删除"></span></div>')) // 丑陋的
       .append('<div class="resize"></div>')
     })

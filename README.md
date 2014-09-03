@@ -1,3 +1,3 @@
-# 专题自动化工具
+# image map tool
 
-旨在将专题页面可视化的转换成 web 页面
+A tool for generating image mpa pages.

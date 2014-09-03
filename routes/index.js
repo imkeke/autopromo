@@ -8,12 +8,11 @@ var util = require('util')
   , fs = require('fs')
   , imagemagick = require('imagemagick')
   , sizeOf = require('image-size')
-  , mu = require('mu2')
   , Mustache = require('mustache')
 
 exports.index = function(req, res){
   res.render('index', {
-    title: '专题生成器'
+    title: 'image map tool'
   });
 };
 
@@ -29,8 +28,13 @@ exports.up = function(req, res) {
       res.end('出错了');
       return;
     }
-    // fs.rename(files.pic.path, './public/uploads/' + files.pic.name);
-    imagemagick.convert([files.pic.path, '-crop', '1920x400', 'public/images/uploads/' + files.pic.name], function(err, stdout) {
+
+    // 统一转换成 jpg
+    var path = files.pic.path
+      , expath = path.split('.')[0].split('/')
+      , newname = expath[expath.length - 1] + '.jpg'
+
+    imagemagick.convert([files.pic.path, '-crop', '1920x400', '-quality', '100', 'public/images/uploads/' + newname], function(err, stdout) {
         if (err) throw err;
 
         console.log(util.inspect(stdout));
@@ -42,15 +46,22 @@ exports.up = function(req, res) {
             height: metadata.height,
             pics: []
           }
-          
-          for (var i = 0; i <= parseInt(metadata.height / 400); i++) {
-            smpic.pics[i] = '/images/uploads/' + files.pic.name.replace('.jpg', '-' + i + '.jpg');
+
+          var smpiclength = parseInt(metadata.height / 400)
+
+          if (smpiclength === 0) {
+              smpic.pics[0] = '/images/uploads/' + newname;
+          } else {
+              for (var i = 0; i <= parseInt(metadata.height / 400); i++) {
+                  smpic.pics[i] = '/images/uploads/' + newname.replace('.jpg', '-' + i + '.jpg');
+              }
+
           }
 
           res.render('index', {
               pic: files.pic.path.split('public')[1],
               smpic: smpic,
-              name: files.pic.name.replace('.jpg', '')
+              name: newname.replace('.jpg', '')
           })
 
         })
@@ -62,7 +73,6 @@ exports.up = function(req, res) {
   });
 };
 
-mu.root = 'public/template'
 exports.generate = function(req, res) {
   var name = req.param('name')
     , data = req.body

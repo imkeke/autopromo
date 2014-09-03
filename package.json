@@ -1,18 +1,19 @@
 {
-  "name": "application-name",
+  "name": "autopromo",
   "version": "0.0.1",
   "private": true,
   "scripts": {
     "start": "node app.js"
   },
   "dependencies": {
+    "es6-promise": "^1.0.0",
     "express": "3.4.7",
-    "jade": "*",
-    "imagemagick": "*",
-    "formidable": "*"
-  },
-  "devDependencies": {
+    "formidable": "*",
+    "generic-pool": "^2.0.4",
     "image-size": "~0.1.16",
+    "imagemagick": "*",
+    "jade": "*",
+    "mongodb": "^1.4.3",
     "mustache": "^0.8.1"
   }
 }
