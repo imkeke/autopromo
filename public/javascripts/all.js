@@ -37,9 +37,9 @@ $(function() {
         return false
       }
 
-      var url = prompt('请输入 URL：')
+      var url = prompt('Enter URL：')
       $flip.append($('<a href="' + url + '" target="_blank">' + url + '</a>'))
-      $flip.append($('<div class="action"><span class="glyphicon glyphicon-edit" title="修改"></span><span class="glyphicon glyphicon-trash" title="删除"></span></div>')) // 丑陋的
+      $flip.append($('<div class="action"><span class="glyphicon glyphicon-edit" title="edit"></span><span class="glyphicon glyphicon-trash" title="delete"></span></div>')) // 丑陋的
       .append('<div class="resize"></div>')
     })
 
@@ -51,8 +51,7 @@ $(function() {
     var e = $(this).parents('.flip').find('a')
       , o = e.attr('href') // origin href
       , t = e.attr('data-taobao') // origin data-taobao
-      , url = prompt('输入 URL：', o)
-      , taobaourl = prompt('输入淘宝原 URL：', t)
+      , url = prompt('Enter URL：', o)
 
     e.attr('href', url).attr('data-taobao', taobaourl).text(url)
 
@@ -63,7 +62,7 @@ $(function() {
   $box.on('click', '.flip .glyphicon-trash', function(event) {
     var e = $(this).parents('.flip')
 
-    if (window.confirm('确认此次操作？')) {
+    if (window.confirm('Are you sure？')) {
       e.remove()
     }
 
@@ -171,7 +170,7 @@ $(function() {
   $('form').on('click', 'button', function() {
     var file = $('form input[type="file"]').val()
     if (!file) {
-        alert('请选择图片')
+        alert('Please select the picture')
         return false
     }
     $('form .progress').show()

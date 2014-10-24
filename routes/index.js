@@ -25,7 +25,7 @@ exports.up = function(req, res) {
   form.parse(req, function(err, fields, files) {
     if (err) {
       console.log(err);
-      res.end('出错了');
+      res.end('error occur');
       return;
     }
 

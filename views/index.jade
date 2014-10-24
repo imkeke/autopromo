@@ -8,25 +8,25 @@ block content
         p 请上传一张命名为 <code>xx.jpg</code> 的图片，生成后为 <code>xx.html</code> 文件
         p <code>xx</code> 为你想要的名字
       div.form-group
-        label(for="upfile") 请选择图片
+        label(for="upfile") Please select a picture
         input(type="file", name="pic", id="upfile", accept="image/*")
       div.progress.progress-striped.active
         div.progress-bar(role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 100%")
-      button.btn.btn-default(type="submit") 提交
+      button.btn.btn-default(type="submit") submit
 
   if smpic
     div.wp(style="width: #{smpic.width}px;")
       ul.pager
         li.previous
-          a(href="/") 返回
+          a(href="/") back
       div.alert.alert-success
-        h4 上传成功
-        p 请在下方图片中划动链接和输入链接地址
+        h4 Uploaded successfully
+        p Please draw a box and enter the link address in the picture below
       div.box(style="width: #{smpic.width}px; height: #{smpic.height}px;")
         each p in smpic.pics
           img(src="#{p}")
       div.generate
-        button.btn.btn-primary.js-generate(data-name="#{name}") 生成并预览
+        button.btn.btn-primary.js-generate(data-name="#{name}") generate and preview
 
   script(src="/javascripts/jquery.js")
   script(src="/javascripts/all.js")
