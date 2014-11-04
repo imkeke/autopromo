@@ -17,6 +17,7 @@ exports.index = function(req, res){
 };
 
 exports.up = function(req, res) {
+  var isAjaxUpload = req.get('X-Requested-With') === 'XMLHttpRequest'
   var form = new formidable.IncomingForm();
 
   form.uploadDir = './public/images/uploads/' || process.cwd();
@@ -62,6 +63,9 @@ exports.up = function(req, res) {
               pic: files.pic.path.split('public')[1],
               smpic: smpic,
               name: newname.replace('.jpg', '')
+          }, isAjaxUpload && function(err, html) {
+            if (err) throw err
+            res.json({html: html.split(/(<body>|<\/body>)/gi)[2]})
           })
 
         })

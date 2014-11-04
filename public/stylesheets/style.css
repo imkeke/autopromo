@@ -38,11 +38,12 @@ a {
     color: #fff;
     cursor: pointer;
 }
-form {
+.mainform {
     width: 580px;
     margin: 0 auto;
+    position: relative;
 }
-form .progress {
+.mainform .progress {
   display: none;
 }
 .generate {
@@ -72,4 +73,24 @@ form .progress {
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+}
+.dragble {
+    width: 100%;
+    height: auto;
+    padding: 50px;
+    background-color: #f5f5f5;
+    border: 1px solid #cbcbcb;
+    position: absolute;
+    left: 0;
+    top: 0;
+    font-size: 22px;
+    text-align: center;
+    box-shadow: 2px 2px 20px 0 rgba(0, 0, 0, .1);
+    color: #777;
+    z-index: 100;
+    display: none;
+}
+.dragblehover {
+    border-color: #999;
+    color: #999;
 }

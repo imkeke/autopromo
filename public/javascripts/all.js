@@ -1,4 +1,4 @@
-"use strict"
+'use strict'
 
 $(function() {
   var $box = $('.box')
@@ -175,4 +175,64 @@ $(function() {
     }
     $('form .progress').show()
   })
+})
+
+// drag and drop
+$(function() {
+  var $dragble = $('.dragble')
+    , isGo = window.File && window.FileList && window.FileReader
+    , t
+  if (!$dragble.length && !isGo) return
+
+  $('body').on('dragover', function() {
+    $dragble.show()
+    clearTimeout(t)
+  })
+
+  $dragble.on('dragover', function(e) {
+    e.preventDefault()
+    e.stopPropagation()
+    $dragble.addClass('dragblehover')
+  }).on('dragenter', function(e) {
+    e.preventDefault()
+    e.stopPropagation()
+  }).on('dragleave', function(e) {
+    $dragble.removeClass('dragblehover')
+    t = setTimeout(function() {
+      $dragble.hide()
+    }, 1000)
+  }).on('drop', function(e) {
+    e.preventDefault()
+    e.stopPropagation()
+    $dragble.hide()
+    if (e.originalEvent.dataTransfer) {
+      var files = e.target.files || e.originalEvent.dataTransfer.files
+      var file = files[0]
+
+      if (file.type.indexOf('image') === -1) {
+        alert('You are not dragging pictures!')
+        return
+      }
+
+      var xhr = new XMLHttpRequest()
+      if (xhr.upload) {
+        var fd = new FormData()
+        fd.append('pic', file)
+        xhr.open('POST', '/up', true)
+        xhr.setRequestHeader('pic', file.name)
+        xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest')
+        $('form .progress').show()
+        xhr.send(fd)
+
+        xhr.onreadystatechange = function() {
+          if (xhr.readyState === 4 && xhr.status === 200) {
+            var $html = $(JSON.parse(xhr.response).html)
+            $('body').empty().append($html)
+            window.history.pushState({}, '', '/up')
+          }
+        }
+      }
+    }
+  })
+
 })
