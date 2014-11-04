@@ -1,3 +1,3 @@
 # image map tool
 
-A tool for generating image mpa pages.
+A tool for generating image map pages.
