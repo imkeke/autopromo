@@ -9,3 +9,4 @@ _notes
 node_modules
 public/images/uploads
 public/html/
+public/dist/

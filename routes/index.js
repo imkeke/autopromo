@@ -10,9 +10,14 @@ var util = require('util')
   , sizeOf = require('image-size')
   , Mustache = require('mustache')
 
+function isDist(app) {
+  return app.locals.settings.env === 'production' ? '/dist' : ''
+}
+
 exports.index = function(req, res){
   res.render('index', {
-    title: 'image map tool'
+    title: 'image map tool',
+    isDist: isDist(req.app)
   });
 };
 
@@ -62,7 +67,8 @@ exports.up = function(req, res) {
           res.render('index', {
               pic: files.pic.path.split('public')[1],
               smpic: smpic,
-              name: newname.replace('.jpg', '')
+              name: newname.replace('.jpg', ''),
+              isDist: isDist(req.app)
           }, isAjaxUpload && function(err, html) {
             if (err) throw err
             res.json({html: html.split(/(<body>|<\/body>)/gi)[2]})
