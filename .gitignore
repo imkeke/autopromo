@@ -10,3 +10,5 @@ node_modules
 public/images/uploads
 public/html/
 public/dist/
+run/app.pid
+nohup.out

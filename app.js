@@ -8,6 +8,7 @@ var routes = require('./routes');
 var user = require('./routes/user');
 var http = require('http');
 var path = require('path');
+var fs = require('fs');
 
 var app = express();
 
@@ -36,4 +37,15 @@ app.post('/generate', routes.generate)
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
+});
+
+// process control
+var pidfile = path.join(__dirname, 'run/app.pid');
+fs.writeFileSync(pidfile, process.pid);
+
+process.on('SIGTERM', function () {
+  if (fs.existsSync(pidfile)) {
+    fs.unlinkSync(pidfile);
+  }
+  process.exit(0);
 });
