@@ -43,7 +43,6 @@ exports.up = function(req, res) {
     imagemagick.convert([files.pic.path, '-crop', '1920x400', '-quality', '100', 'public/images/uploads/' + newname], function(err, stdout) {
         if (err) throw err;
 
-        console.log(util.inspect(stdout));
         sizeOf(files.pic.path, function(err, metadata) {
           if (err) throw err;
 
