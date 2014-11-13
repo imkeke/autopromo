@@ -32,20 +32,22 @@ if ('development' == app.get('env')) {
 
 app.get('/', routes.index);
 app.get('/users', user.list);
-app.post('/up', routes.up)
-app.post('/generate', routes.generate)
+app.post('/up', routes.up);
+app.post('/generate', routes.generate);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
 });
 
 // process control
-var pidfile = path.join(__dirname, 'run/app.pid');
-fs.writeFileSync(pidfile, process.pid);
+if ('production' === app.get('evn')) {
+  var pidfile = path.join(__dirname, 'run/app.pid');
+  fs.writeFileSync(pidfile, process.pid);
 
-process.on('SIGTERM', function () {
-  if (fs.existsSync(pidfile)) {
-    fs.unlinkSync(pidfile);
-  }
-  process.exit(0);
-});
+  process.on('SIGTERM', function () {
+    if (fs.existsSync(pidfile)) {
+      fs.unlinkSync(pidfile);
+    }
+    process.exit(0);
+  });
+}

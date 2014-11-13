@@ -69,14 +69,14 @@ $(function() {
     event.preventDefault()
   })
   
-  // 移动
+  // move
   $box.on('mousedown', '.flip', function(event) {
     if (event.button === 2) return
 
     var e = $(this)
-      , left = parseFloat(e.css('left'), 10) // 初始 left
-      , top = parseFloat(e.css('top'), 10) // 初始 top
-      , x = event.pageX // 鼠标坐标 用来计算划动距离
+      , left = parseFloat(e.css('left'), 10) // left
+      , top = parseFloat(e.css('top'), 10) // top
+      , x = event.pageX // mouse offset, calculates the move distance
       , y = event.pageY
 
     $(document).on('mousemove', function(event) {
